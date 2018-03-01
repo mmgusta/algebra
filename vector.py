@@ -45,7 +45,7 @@ class Vector(object):
         step1 = 1/self.magnetude()
         return self.times_scalar(step1)
 
-
+ 
 # Ex1
 # v1 = Vector([8.218, -9.341])
 # v2 = Vector([-1.129, 2.111])
