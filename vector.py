@@ -1,6 +1,5 @@
 import math
 
-
 class Vector(object):
 
     CANNOT_NORMALIZE_ZERO_VECTOR_MSG = 'Cannot normalize the zero vector'
@@ -54,7 +53,7 @@ class Vector(object):
 
     def dotProduct(self, v):
         new_coordinates = [x*y for x,y in zip(self.coordinates, v.coordinates)]
-        return sum(new_coordinates)
+        return round(sum(new_coordinates), 3)
 
     def angle(self, v, degree=False):
         try:
@@ -74,8 +73,39 @@ class Vector(object):
             else:
                 raise e
         
+    def isOrthogonalTo(self, v, tolerance = 1e-10):
+        return abs(self.dotProduct(v)) < tolerance
 
- 
+    def isParallelTo(self, v):
+        return(self.isZero() or
+                v.isZero() or
+                self.angle(v) == 0 or
+                self.angle(v) == math.pi)
+
+    def isZero(self, tolerance = 1e-10):
+        return self.magnetude() < tolerance
+
+
+v1 = Vector([-7.579, -7.88])
+v2 = Vector([22.737, 23.64])
+print('Parallel:', v1.isParallelTo(v2))
+print('Orthogonal:', v1.isOrthogonalTo(v2))
+
+v3 = Vector([-2.029, 9.97, 4.172])
+v4 = Vector([-9.231, -6.639, -7.245])
+print('Parallel:', v3.isParallelTo(v4))
+print('Orthogonal:', v3.isOrthogonalTo(v4))
+
+v5 = Vector([-2.328, -7.284, -1.214])
+v6 = Vector([-1.821, 1.072, -2.94])
+print('Parallel:', v5.isParallelTo(v6))
+print('Orthogonal:', v5.isOrthogonalTo(v6))
+
+v7 = Vector([2.118, 4.827])
+v8 = Vector([0, 0])
+print('Parallel:', v7.isParallelTo(v8))
+print('Orthogonal:', v7.isOrthogonalTo(v8))
+
 # Ex1
 # v1 = Vector([8.218, -9.341])
 # v2 = Vector([-1.129, 2.111])
