@@ -85,26 +85,33 @@ class Vector(object):
     def isZero(self, tolerance = 1e-10):
         return self.magnetude() < tolerance
 
+    def projection(self, b):
+        norm_b = b.normalized()
+        dot_v = self.dotProduct(norm_b)
+        proj_v = norm_b.times_scalar(dot_v)
+        return proj_v
 
-v1 = Vector([-7.579, -7.88])
-v2 = Vector([22.737, 23.64])
-print('Parallel:', v1.isParallelTo(v2))
-print('Orthogonal:', v1.isOrthogonalTo(v2))
+    def component(self, b):
+        proj_v = self.projection(b)
+        return self.minus(proj_v)
 
-v3 = Vector([-2.029, 9.97, 4.172])
-v4 = Vector([-9.231, -6.639, -7.245])
-print('Parallel:', v3.isParallelTo(v4))
-print('Orthogonal:', v3.isOrthogonalTo(v4))
+    def decomposition(self, b):
+        proj_v = self.projection(b)
+        comp_v = self.component(b)
+        return proj_v.plus(comp_v)
 
-v5 = Vector([-2.328, -7.284, -1.214])
-v6 = Vector([-1.821, 1.072, -2.94])
-print('Parallel:', v5.isParallelTo(v6))
-print('Orthogonal:', v5.isOrthogonalTo(v6))
+v1 = Vector([3.039, 1.879])
+b1 = Vector([0.825, 2.036])
+print(v1.projection(b1))
 
-v7 = Vector([2.118, 4.827])
-v8 = Vector([0, 0])
-print('Parallel:', v7.isParallelTo(v8))
-print('Orthogonal:', v7.isOrthogonalTo(v8))
+v2 = Vector([-9.88, -3.264, -8.159])
+b2 = Vector([-2.155, -9.353, -9.473])
+print(v2.component(b2))
+
+v3 = Vector([3.009, -6.172, 3.692, -2.51])
+b3 = Vector([6.404, -9.144, 2.759, 8.718])
+print(v3.projection(b3))
+print(v3.component(b3))
 
 # Ex1
 # v1 = Vector([8.218, -9.341])
@@ -152,3 +159,24 @@ print('Orthogonal:', v7.isOrthogonalTo(v8))
 # v8 = Vector([2.751, 8.259, 3.985])
 
 # print(v7.angle(v8, degree=True))
+
+# Ex5
+# v1 = Vector([-7.579, -7.88])
+# v2 = Vector([22.737, 23.64])
+# print('Parallel:', v1.isParallelTo(v2))
+# print('Orthogonal:', v1.isOrthogonalTo(v2))
+
+# v3 = Vector([-2.029, 9.97, 4.172])
+# v4 = Vector([-9.231, -6.639, -7.245])
+# print('Parallel:', v3.isParallelTo(v4))
+# print('Orthogonal:', v3.isOrthogonalTo(v4))
+
+# v5 = Vector([-2.328, -7.284, -1.214])
+# v6 = Vector([-1.821, 1.072, -2.94])
+# print('Parallel:', v5.isParallelTo(v6))
+# print('Orthogonal:', v5.isOrthogonalTo(v6))
+
+# v7 = Vector([2.118, 4.827])
+# v8 = Vector([0, 0])
+# print('Parallel:', v7.isParallelTo(v8))
+# print('Orthogonal:', v7.isOrthogonalTo(v8))
