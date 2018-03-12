@@ -100,18 +100,31 @@ class Vector(object):
         comp_v = self.component(b)
         return proj_v.plus(comp_v)
 
-v1 = Vector([3.039, 1.879])
-b1 = Vector([0.825, 2.036])
-print(v1.projection(b1))
+    def crossProduct(self, v):
+        coord1 = (self.coordinates[1]*v.coordinates[2]) - (v.coordinates[1]*self.coordinates[2])
+        coord2 = -((self.coordinates[0]*v.coordinates[2]) - (v.coordinates[0]*self.coordinates[2]))
+        coord3 = (self.coordinates[0]*v.coordinates[1]) - (v.coordinates[0]*self.coordinates[1])
+        return Vector([coord1, coord2, coord3])
 
-v2 = Vector([-9.88, -3.264, -8.159])
-b2 = Vector([-2.155, -9.353, -9.473])
-print(v2.component(b2))
+    def areaParallelogram(self, v):
+        cross_prod = self.crossProduct(v)
+        return cross_prod.magnetude()
 
-v3 = Vector([3.009, -6.172, 3.692, -2.51])
-b3 = Vector([6.404, -9.144, 2.759, 8.718])
-print(v3.projection(b3))
-print(v3.component(b3))
+    def areaTriangle(self, v):
+        return self.areaParallelogram(v) / 2
+
+
+v1 = Vector([8.462, 7.893, -8.187])
+v2 = Vector([6.984, -5.975, 4.778])
+print('Cross product',v1.crossProduct(v2))
+
+v3 = Vector([-8.987, -9.838, 5.031])
+v4 = Vector([-4.268, -1.861, -8.866])
+print('Area of parallelogram', v3.areaParallelogram(v4))
+
+v5 = Vector([1.5, 9.547, 3.691])
+v6 = Vector([-6.007, 0.124, 5.772])
+print('Area of triangle', v5.areaTriangle(v6))
 
 # Ex1
 # v1 = Vector([8.218, -9.341])
@@ -180,3 +193,18 @@ print(v3.component(b3))
 # v8 = Vector([0, 0])
 # print('Parallel:', v7.isParallelTo(v8))
 # print('Orthogonal:', v7.isOrthogonalTo(v8))
+
+
+# Ex6
+# v1 = Vector([3.039, 1.879])
+# b1 = Vector([0.825, 2.036])
+# print(v1.projection(b1))
+
+# v2 = Vector([-9.88, -3.264, -8.159])
+# b2 = Vector([-2.155, -9.353, -9.473])
+# print(v2.component(b2))
+
+# v3 = Vector([3.009, -6.172, 3.692, -2.51])
+# b3 = Vector([6.404, -9.144, 2.759, 8.718])
+# print(v3.projection(b3))
+# print(v3.component(b3))
