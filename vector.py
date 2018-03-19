@@ -113,19 +113,6 @@ class Vector(object):
     def areaTriangle(self, v):
         return self.areaParallelogram(v) / 2
 
-
-v1 = Vector([8.462, 7.893, -8.187])
-v2 = Vector([6.984, -5.975, 4.778])
-print('Cross product',v1.crossProduct(v2))
-
-v3 = Vector([-8.987, -9.838, 5.031])
-v4 = Vector([-4.268, -1.861, -8.866])
-print('Area of parallelogram', v3.areaParallelogram(v4))
-
-v5 = Vector([1.5, 9.547, 3.691])
-v6 = Vector([-6.007, 0.124, 5.772])
-print('Area of triangle', v5.areaTriangle(v6))
-
 # Ex1
 # v1 = Vector([8.218, -9.341])
 # v2 = Vector([-1.129, 2.111])
@@ -208,3 +195,16 @@ print('Area of triangle', v5.areaTriangle(v6))
 # b3 = Vector([6.404, -9.144, 2.759, 8.718])
 # print(v3.projection(b3))
 # print(v3.component(b3))
+
+# Ex7
+# v1 = Vector([8.462, 7.893, -8.187])
+# v2 = Vector([6.984, -5.975, 4.778])
+# print('Cross product',v1.crossProduct(v2))
+
+# v3 = Vector([-8.987, -9.838, 5.031])
+# v4 = Vector([-4.268, -1.861, -8.866])
+# print('Area of parallelogram', v3.areaParallelogram(v4))
+
+# v5 = Vector([1.5, 9.547, 3.691])
+# v6 = Vector([-6.007, 0.124, 5.772])
+# print('Area of triangle', v5.areaTriangle(v6))
