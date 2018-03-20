@@ -21,27 +21,28 @@ class Line(object):
             constant_term = 0
         self.constant_term = constant_term
 
-        # self.set_basepoint()
+        self.set_basepoint()
 
 
-    # def set_basepoint(self):
-    #     try:
-    #         n = self.normal_vector
-    #         c = self.constant_term
-    #         #basepoint_coords = 0*self.dimension
+    def set_basepoint(self):
+        try:
+            n = self.normal_vector
+            c = self.constant_term
+            #basepoint_coords = self.dimension
 
-    #         initial_index = Line.first_nonzero_index(n.coordinates)
-    #         initial_coefficient = n.coordinates[initial_index]
+            initial_index = Line.first_nonzero_index(n.coordinates)
+            initial_coefficient = n.coordinates[initial_index]
 
-    #         d= c/initial_coefficient
-    #         #basepoint_coords[initial_index] = d
-    #         self.basepoint = Vector(d)
+            d= c/initial_coefficient
+            #basepoint_coords[initial_index] = d
 
-    #     except Exception as e:
-    #         if str(e) == Line.NO_NONZERO_ELTS_FOUND_MSG:
-    #             self.basepoint = None
-    #         else:
-    #             raise e
+            self.basepoint = Vector([d])
+
+        except Exception as e:
+            if str(e) == Line.NO_NONZERO_ELTS_FOUND_MSG:
+                self.basepoint = None
+            else:
+                raise e
 
 
     def __str__(self):
@@ -94,7 +95,37 @@ class Line(object):
         n1 = self.normal_vector
         n2 = ell.normal_vector
 
-        return n1.isParallelTo(n2)
+        if n1.isParallelTo(n2) :
+            if self.is_same_line(ell):
+                return 'Parallel, same line'
+            else:
+                return 'Parallel, not same line'
+        else:
+            points = self.intersection_potions(ell)
+            return 'Not parallel, intersection ponts. X= ' + str(points[0]) + ' Y= ' + str(points[1])
+
+
+    def is_same_line(self, l2):
+        x0 = self.basepoint
+        y0 = l2.basepoint
+
+        basepoint_diff = x0.minus(y0)
+
+        normal = self.normal_vector
+
+        if normal.isOrthogonalTo(basepoint_diff):
+            return True
+        else:
+            return False
+
+    def intersection_potions(self, l2):
+        k1, k2 = self.constant_term, l2.constant_term
+        A,B,C,D = self.normal_vector.coordinates[0], self.normal_vector.coordinates[1], l2.normal_vector.coordinates[0], l2.normal_vector.coordinates[1]
+
+        x = round(((D*k1) - (B*k2))/((A*D) - (B*C)), 3)
+        y = round((-(C*k1) + (A*k2))/((A*D) - (B*C)), 3)
+
+        return x,y
 
     # def is_near_zero(self, eps=1e-10):
     #     return abs(self) < eps
@@ -111,4 +142,12 @@ class Line(object):
 
 l1 = Line(normal_vector=Vector([4.046, 2.836]), constant_term=1.21)
 l2 = Line(normal_vector=Vector([10.115, 7.09]), constant_term=3.025)
-print(l1.is_paralallel_to(l2))
+print('Resp:', l1.is_paralallel_to(l2))  
+
+l3 = Line(normal_vector=Vector([7.204, 3.182]), constant_term=8.68)
+l4 = Line(normal_vector=Vector([8.172, 4.114]), constant_term=9.883)
+print('Resp:', l3.is_paralallel_to(l4))  
+
+l5 = Line(normal_vector=Vector([1.182, 5.562]), constant_term=6.744)
+l6 = Line(normal_vector=Vector([1.773, 8.343]), constant_term=9.525)
+print('Resp:', l5.is_paralallel_to(l6))  
